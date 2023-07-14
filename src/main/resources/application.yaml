@@ -1,0 +1,42 @@
+server:
+  port: 9000
+  netty:
+    connection-timeout: 3s
+    idle-timeout: 20s
+  shutdown: graceful
+
+spring:
+  application:
+    name: api-gateway
+  lifecycle:
+    timeout-per-shutdown-phase: 20s
+  cloud:
+    gateway:
+      routes:
+        - id: catalog-service
+          uri: ${CATALOG_SERVICE_URL:http://localhost:9001}/games
+          predicates:
+            - Path=/games/**
+        - id: order-service
+          uri: ${ORDER_SERVICE_URL:http://locahost:9002}/orders
+          predicates:
+            - Path=/order/**
+      httpclient:
+        connect-timeout: 3000
+        response-timeout: 5s
+        pool:
+          type: elastic
+          max-idle-time: 20s
+          max-life-time: 60s
+      default-filters:
+        - name: Retry
+          args:
+            retries: 3
+            methods: GET
+            series: SERVER_ERROR
+            exceptions: java.io.IOException, java.util.concurrent.TimeoutException
+            backoff:
+              firstBackoff: 100ms
+              maxBackoff: 5s
+              factor: 2
+              basedOnPreviousValue: false
