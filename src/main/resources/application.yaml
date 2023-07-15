@@ -1,3 +1,7 @@
+logging:
+  level:
+    io.github.resilience4j: DEBUG
+
 server:
   port: 9000
   netty:
@@ -17,10 +21,19 @@ spring:
           uri: ${CATALOG_SERVICE_URL:http://localhost:9001}/games
           predicates:
             - Path=/games/**
+          filters:
+            - name: CircuitBreaker
+              args:
+                name: catalogCircuitBreaker
+                fallbackUri: forward:/catalog-fallback
         - id: order-service
           uri: ${ORDER_SERVICE_URL:http://locahost:9002}/orders
           predicates:
             - Path=/order/**
+          filters:
+            - name: CircuitBreaker
+              args:
+                name: orderCircuitBreaker
       httpclient:
         connect-timeout: 3000
         response-timeout: 5s
@@ -40,3 +53,15 @@ spring:
               maxBackoff: 5s
               factor: 2
               basedOnPreviousValue: false
+resilience4j:
+  circuitbreaker:
+    configs:
+      default:
+        slidingWindowSize: 20
+        permittedNumberOfCallsInHalfOpenState: 5
+        failureRateThreshold: 50
+        waitDurationInOpenState: 10000
+  timelimiter:
+    configs:
+      default:
+        timeoutDuration: 5s

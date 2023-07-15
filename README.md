@@ -18,3 +18,12 @@ by [Thomas Vitale](https://www.thomasvitale.com).
 ## Local development and tools
 
 Check out the rather similar command for GameCloud [catalog-service](https://github.com/b3nk4n/gamecloud-catalog-service#local-development-and-tools).
+
+### Testing the Circuit Breaker
+
+The Apache HTTP benchmark took `ab` can be used to test the circuit breaker.
+
+```bash
+ab -n 21 -c 1 -m POST http://localhost:9000/orders
+ab -n 21 -c 1 -m GET http://localhost:9000/games
+```
