@@ -53,6 +53,18 @@ spring:
               maxBackoff: 5s
               factor: 2
               basedOnPreviousValue: false
+        - name: RequestRateLimiter
+          args:
+            redis-rate-limiter:
+              replenishRate: 10
+              burstCapacity: 20
+              requestedTokens: 1
+  data:
+    redis:
+      connect-timeout: 3s
+      host: localhost
+      port: 6379
+      timeout: 1s
 resilience4j:
   circuitbreaker:
     configs:
