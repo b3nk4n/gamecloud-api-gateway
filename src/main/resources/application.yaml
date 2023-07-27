@@ -14,7 +14,10 @@ spring:
     name: api-gateway
   lifecycle:
     timeout-per-shutdown-phase: 20s
+  config:
+    import: "optional:configserver:"
   session:
+    # https://docs.spring.io/spring-session/reference/guides/boot-redis.html#boot-spring-configuration
     store-type: redis # to disable Redis session management in a test, set it to "none" (e.g. via @TestPropertySource or YAML file)
     timeout: 10m
     redis:
@@ -83,3 +86,9 @@ resilience4j:
     configs:
       default:
         timeoutDuration: 5s
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: refresh
