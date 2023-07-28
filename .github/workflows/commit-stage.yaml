@@ -48,8 +48,8 @@ jobs:
           kubectl: v1.25.0
           kubeval: v0.16.1
       - name: Validate Kubernetes Manifests
-        run: |
-          kubeval --strict -d dev/k8s
+        run: | # use of 3rd party schema is required for validation of Ingress resource, see https://github.com/instrumenta/kubeval/issues/301
+          kubeval --schema-location https://raw.githubusercontent.com/yannh/kubernetes-json-schema/master --strict -d dev/k8s
   package:
     name: Package and Publish
     if: ${{ github.ref == 'refs/heads/main' }}
