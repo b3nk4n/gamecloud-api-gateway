@@ -74,6 +74,17 @@ spring:
       host: localhost
       port: 6379
       timeout: 1s
+  security:
+    oauth2:
+      client:
+        registration:
+          keycloak: # registrationId in Spring Security
+            client-id: api-gateway
+            client-secret: gamecloud-keycloak-secret
+            scope: openid
+        provider:
+          keycloak: # registrationId in Spring Security
+            issuer-url: http://localhost:8080/realms/GameCloud
 resilience4j:
   circuitbreaker:
     configs:
