@@ -84,7 +84,7 @@ spring:
             scope: openid
         provider:
           keycloak: # registrationId in Spring Security
-            issuer-url: http://localhost:8080/realms/GameCloud
+            issuer-uri: http://localhost:8080/realms/GameCloud
 resilience4j:
   circuitbreaker:
     configs:
