@@ -42,6 +42,10 @@ spring:
             - name: CircuitBreaker
               args:
                 name: orderCircuitBreaker
+        - id: ui-routes
+          uri: ${UI_URL:http://localhost:9004}
+          predicates:
+            - Path=/,/*.css,/*.js,/favicon.ico
       httpclient:
         connect-timeout: 3000
         response-timeout: 5s

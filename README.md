@@ -47,3 +47,8 @@ minikube ip --profile gamecloud
 ```
 
 This is similar to the `kubectl port-forward` command, but it applies to the whole cluster instead of a single service.
+
+## Authorization
+
+The authorization flow can be started from a single page application (SPA) via the `/oauth2/authorization/{registrationId}`
+endpoint, such as via `window.open('/oauth2/authorization/keycloak', '_self')`.
