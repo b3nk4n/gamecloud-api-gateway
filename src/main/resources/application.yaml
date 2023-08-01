@@ -55,6 +55,7 @@ spring:
           max-life-time: 60s
       default-filters:
         - name: SaveSession
+        - name: TokenRelay
         - name: RequestRateLimiter
           args:
             redis-rate-limiter:

@@ -52,3 +52,11 @@ This is similar to the `kubectl port-forward` command, but it applies to the who
 
 The authorization flow can be started from a single page application (SPA) via the `/oauth2/authorization/{registrationId}`
 endpoint, such as via `window.open('/oauth2/authorization/keycloak', '_self')`.
+
+### Keycloak DNS in local envs
+
+To enable resolving keycloak domain name from outside the cluster for local development, you can add the following DNS entry:
+
+```bash
+echo "127.0.0.1 gamecloud-keycloak" | sudo tee -a /etc/hosts
+```
