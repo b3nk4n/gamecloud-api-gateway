@@ -22,6 +22,9 @@ class UserControllerTest {
     @Autowired
     WebTestClient webClient;
 
+    /**
+     * A mock bean to skip the interaction with Keycloak when retrieving information about the client registration.
+     */
     @MockBean
     ReactiveClientRegistrationRepository clientRegistrationRepository;
 
