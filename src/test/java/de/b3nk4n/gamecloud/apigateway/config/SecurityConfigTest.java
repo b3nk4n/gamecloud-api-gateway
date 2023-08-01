@@ -46,6 +46,25 @@ class SecurityConfigTest {
                 .expectStatus().isFound();
     }
 
+    @Test
+    void whenLogoutAuthenticatedAndNoCsrfTokenThen403() {
+        webClient
+                .mutateWith(SecurityMockServerConfigurers.mockOidcLogin())
+                .post()
+                .uri("/logout")
+                .exchange()
+                .expectStatus().isForbidden();
+    }
+
+    @Test
+    void whenLogoutNotAuthenticatedAndNoCsrfTokenThen403() {
+        webClient
+                .post()
+                .uri("/logout")
+                .exchange()
+                .expectStatus().isForbidden();
+    }
+
     private ClientRegistration testClientRegistration() {
         return ClientRegistration.withRegistrationId(TEST_REGISTRATION_ID)
                 .authorizationGrantType(AuthorizationGrantType.AUTHORIZATION_CODE)
