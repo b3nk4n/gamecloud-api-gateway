@@ -33,7 +33,7 @@ public class UserController {
                 oidcUser.getPreferredUsername(),
                 oidcUser.getGivenName(),
                 oidcUser.getFamilyName(),
-                List.of("employee", "cuastomer")
+                List.of("employee", "customer")
         );
     }
 }
