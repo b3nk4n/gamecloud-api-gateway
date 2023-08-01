@@ -86,7 +86,7 @@ spring:
           keycloak: # registrationId in Spring Security
             client-id: api-gateway
             client-secret: gamecloud-keycloak-secret
-            scope: openid
+            scope: openid,roles
         provider:
           keycloak: # registrationId in Spring Security
             issuer-uri: http://localhost:8080/realms/GameCloud

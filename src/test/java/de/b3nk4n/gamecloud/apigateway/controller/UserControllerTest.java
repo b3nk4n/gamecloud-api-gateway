@@ -57,6 +57,7 @@ class UserControllerTest {
                 builder -> builder
                         .claim(StandardClaimNames.PREFERRED_USERNAME, user.username())
                         .claim(StandardClaimNames.GIVEN_NAME, user.firstName())
-                        .claim(StandardClaimNames.FAMILY_NAME, user.lastName()));
+                        .claim(StandardClaimNames.FAMILY_NAME, user.lastName())
+                        .claim("roles", user.roles()));
     }
 }
