@@ -1,6 +1,7 @@
 package de.b3nk4n.gamecloud.apigateway.config;
 
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.config.Customizer;
@@ -17,21 +18,23 @@ import org.springframework.security.web.server.csrf.CsrfToken;
 import org.springframework.web.server.WebFilter;
 import reactor.core.publisher.Mono;
 
+@Configuration // required when using @EnableWebFluxSecurity since Spring Security 6.0 (https://github.com/spring-projects/spring-security/issues/12434)
 @EnableWebFluxSecurity
 public class SecurityConfig {
     @Bean
     SecurityWebFilterChain securityWebFilterChain(ServerHttpSecurity httpSecurity,
-                                                  ReactiveClientRegistrationRepository clientRegistrationRepository) {
+                                                  @SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection") ReactiveClientRegistrationRepository clientRegistrationRepository) {
         return httpSecurity
                 .authorizeExchange(exchange -> exchange
                         .pathMatchers("/", "*.js", "*.css", "favicon.ico").permitAll()
                         .pathMatchers(HttpMethod.GET, "/games/**").permitAll()
                         .anyExchange().authenticated())
-                .exceptionHandling(exceptionHandlingSpec ->
-                        // Change default of 302 forwarding to 401 when SPA is used, so that the UI is in control of the
-                        // authentication flow. This means that the UI is presented to unauthenticated users, instead of being
-                        // automatically redirected to the Keycloak login page when not signed in.
-                        exceptionHandlingSpec.authenticationEntryPoint(new HttpStatusServerEntryPoint(HttpStatus.UNAUTHORIZED)))
+                // disabled the following exception handling as long as we are not using an SPA UI
+//                .exceptionHandling(exceptionHandlingSpec ->
+//                        // Change default of 302 forwarding to 401 when SPA is used, so that the UI is in control of the
+//                        // authentication flow. This means that the UI is presented to unauthenticated users, instead of being
+//                        // automatically redirected to the Keycloak login page when not signed in.
+//                        exceptionHandlingSpec.authenticationEntryPoint(new HttpStatusServerEntryPoint(HttpStatus.UNAUTHORIZED)))
                 //.formLogin(Customizer.withDefaults())
                 .oauth2Login(Customizer.withDefaults())
                 .logout(logoutSpec -> {

@@ -2,14 +2,15 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: gamecloud-ingress
-  annotations:
-    nginx.ingress.kubernetes.io/rewrite-target: /
+  # annotations:
+  #  nginx.ingress.kubernetes.io/rewrite-target: /
 spec:
   ingressClassName: nginx
   rules:
     - http:
         paths:
-          - path: /api
+          # - path: /api if using this /api -> / rewrite, then the k8s setup would be different compared to the docker-compose setup
+          - path: /
             pathType: Prefix
             backend:
               service:

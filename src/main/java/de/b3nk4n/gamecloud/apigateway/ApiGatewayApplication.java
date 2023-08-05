@@ -2,8 +2,9 @@ package de.b3nk4n.gamecloud.apigateway;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.security.reactive.ReactiveUserDetailsServiceAutoConfiguration;
 
-@SpringBootApplication
+@SpringBootApplication(exclude = ReactiveUserDetailsServiceAutoConfiguration.class)
 public class ApiGatewayApplication {
 
     public static void main(String[] args) {

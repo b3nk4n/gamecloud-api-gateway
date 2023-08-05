@@ -35,7 +35,8 @@ class UserControllerTest {
                 .uri("/user")
                 .exchange()
                 .expectStatus()
-                .isUnauthorized();
+                //.isUnauthorized(); // required when an SPA UI is used
+                .isFound();
     }
 
     @Test
