@@ -11,7 +11,8 @@ custom_build(
 # Deploy
 k8s_yaml([
 	'dev/k8s/deployment.yaml',
-	'dev/k8s/service.yaml'
+	'dev/k8s/service.yaml',
+	'dev/k8s/ingress.yaml'
 ])
 
 # Manage

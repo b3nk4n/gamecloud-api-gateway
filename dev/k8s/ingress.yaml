@@ -7,7 +7,8 @@ metadata:
 spec:
   ingressClassName: nginx
   rules:
-    - http:
+    - host: gamecloud-api.local # leaving out spec.rules.host currently does not seem to be supported on docker drive for MacOS M1 when using "minikube tunnel --profile gamecloud" (https://stackoverflow.com/questions/72038418/cannot-connect-to-minikube-ipnode-port-on-mac-m1)
+      http:
         paths:
           # - path: /api if using this /api -> / rewrite, then the k8s setup would be different compared to the docker-compose setup
           - path: /
