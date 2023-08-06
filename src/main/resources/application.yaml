@@ -37,7 +37,7 @@ spring:
         - id: order-service
           uri: ${ORDER_SERVICE_URL:http://locahost:9002}/orders
           predicates:
-            - Path=/order/**
+            - Path=/orders/**
           filters:
             - name: CircuitBreaker
               args:
